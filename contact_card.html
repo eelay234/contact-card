@@ -1,0 +1,71 @@
+<html>
+<head>
+	<title>Contact Card</title>
+	<script type="text/javascript" src='http://code.jquery.com/jquery-1.10.2.min.js'></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			var obj = {};
+			$('form').submit(function(){
+				var data = $(this).serialize().split('&');
+				//var obj = {};
+    			for(var key in data)
+   				{
+       				 console.log(data[key]);
+       				 obj[data[key].split("=")[0]] = data[key].split("=")[1];
+    			}
+    			console.log(obj);
+    			var fname = obj['first_name'].replace(/\+/g, " ");
+    			var lname = obj['last_name'].replace(/\+/g, " ");
+-				$('#show_description').append('<div class="added"><h3>'+fname+' '+lname+'</h3></div>');
+-				$('#show_description .added').css('border', 'solid 1px black');
+-				$('#show_description .added').css('margin-bottom', '5px');
+				return false;
+			});
+
+			$('#show_description').on('click', '.added', function() {
+				var des = obj['description'].replace(/\+/g, " ");
+				$(this).html('<h3>'+des+'</h3>');				
+			});
+		});
+	</script>
+	<style>
+		#container {
+			margin: 0 auto;
+			width: 800px;
+		}
+
+		#form1, #show_description {
+			display: inline-block;
+			vertical-align: top;
+			width: 300px;
+		}
+
+        #form1 span {
+        	display: inline-block;
+        	width: 100px;
+        	margin-bottom: 10px;
+        }
+
+        #btn {
+        	margin-top: 10px;
+        }
+
+        #show_description {
+        	text-align: center;
+        }
+  
+      </style>
+</head>
+<body>
+  <div id="container">
+	<form id="form1" action="process.php" method="post">
+		<span>First Name:</span> <input type="text" name="first_name"><br>
+		<span>Last Name:</span> <input type="text" name="last_name"><br>
+		<span>Description:</span><br> <textarea name="description" placeholder="Enter description"></textarea><br>
+		<input type="submit" name="submit" value="Add User" id="btn">
+	</form>
+	<div id="show_description">
+	</div>
+  </div>
+</body>
+</html>
